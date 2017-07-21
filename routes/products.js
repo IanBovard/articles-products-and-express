@@ -8,11 +8,16 @@ let productData = {
 };
 
 router.get('/', (req, res) => {
-  console.log(productData);
   res.render('products/index.hbs', productData);
 });
 router.get('/new', (req, res) => {
   res.render('products/new.hbs');
+});
+router.get('/:id', (req, res) => {
+  res.render(`products/product.hbs`);
+});
+router.get('/:id/edit', (req, res) => {
+  res.render(`products/edit.hbs`);
 });
 
 router.post('/', (req, res) => {
@@ -29,9 +34,18 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
+  let id = parseInt(req.params.id);
   req.body.price = parseFloat(req.body.price);
   req.body.inventory = parseInt(req.body.inventory);
-  req.body.id = parseInt(req.body.id);
-  Products.putIndex(req.body);
+  req.body.id = id;
+  if (Products.putIndex(req.body) > -1){
+    console.log('modified', productData);
+    res.redirect(`/products/${id}`);
+  }else{
+    res.redirect(`/products/${id}/edit`);
+  }
 });
+
+
+
 module.exports = router;

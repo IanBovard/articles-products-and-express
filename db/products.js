@@ -23,12 +23,17 @@ function postData (dataObject) {
 
 function putIndex (dataObject){
   let dataIndex = productData.findIndex((data)=>{
-    return parseInt(dataObject.id) === data.id;
+    return dataObject.id === data.id;
   });
-  for (let prop in productData[dataIndex]) {
-    if (productData[dataIndex][prop] !== dataObject[prop] && dataObject[prop] !== ''){
-      productData[dataIndex][prop] = dataObject[prop];
+  if (dataIndex > -1){
+    for (let prop in productData[dataIndex]) {
+      if (productData[dataIndex][prop] !== dataObject[prop] && dataObject[prop] !== ''){
+        productData[dataIndex][prop] = dataObject[prop];
+      }
     }
+    return true;
+  }else{
+    return dataIndex;
   }
 }
 
