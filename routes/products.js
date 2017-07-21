@@ -8,6 +8,7 @@ let productData = {
 };
 
 router.get('/', (req, res) => {
+  console.log(productData);
   res.render('products/index.hbs', productData);
 });
 router.get('/new', (req, res) => {
@@ -15,7 +16,7 @@ router.get('/new', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  req.body.price = parseInt(req.body.price);
+  req.body.price = parseFloat(req.body.price);
   req.body.inventory = parseInt(req.body.inventory);
   if (req.body.name && typeof req.body.price === 'number' && typeof req.body.inventory === 'number'){
     if (Products.postData(req.body)){
@@ -28,6 +29,9 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-
+  req.body.price = parseFloat(req.body.price);
+  req.body.inventory = parseInt(req.body.inventory);
+  req.body.id = parseInt(req.body.id);
+  Products.putIndex(req.body);
 });
 module.exports = router;
