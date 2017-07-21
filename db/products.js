@@ -3,6 +3,7 @@ module.exports = {
   getData : getData,
   postData : postData,
   putIndex : putIndex,
+  deleteIndex : deleteIndex,
 };
 let productData = [];
 let id = 1;
@@ -35,6 +36,17 @@ function putIndex (dataObject){
   }else{
     return dataIndex;
   }
+}
+
+function deleteIndex (dataObject){
+  let dataIndex = productData.findIndex((data)=>{
+    return dataObject.id === data.id;
+  });
+  console.log(dataIndex);
+  if (dataIndex > -1){
+    productData.splice(dataIndex, 1);
+  }
+  return dataIndex;
 }
 
 function getData(){

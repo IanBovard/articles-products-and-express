@@ -39,11 +39,21 @@ router.put('/:id', (req, res) => {
   req.body.inventory = parseInt(req.body.inventory);
   req.body.id = id;
   if (Products.putIndex(req.body) > -1){
-    console.log('modified', productData);
     res.redirect(`/products/${id}`);
   }else{
     res.redirect(`/products/${id}/edit`);
   }
+});
+
+router.delete('/:id', (req, res) => {
+ let id = parseInt(req.params.id);
+ req.body.id = id;
+ if (Products.deleteIndex(req.body) > -1){
+  console.log('productData',productData);
+  res.redirect('/products');
+}else{
+  res.redirect(`/products/${id}`);
+}
 });
 
 
