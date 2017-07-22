@@ -1,1 +1,12 @@
-<h1>INDEX</h1>
+<div class="products">
+  {{#each product}}
+  <div class="productList">
+    <h3>{{name}}</h3>
+    <ul class="productProps">
+      <div>price : {{price}}</div>
+      <div>inventory : {{inventory}}</div>
+      <div>id : {{id}}</div>
+    </ul>
+  </div>
+  {{/each}}
+</div>

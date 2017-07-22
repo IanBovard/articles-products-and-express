@@ -14,10 +14,12 @@ router.get('/new', (req, res) => {
   res.render('products/new.hbs');
 });
 router.get('/:id', (req, res) => {
-  res.render(`products/product.hbs`);
+  let id = parseInt(req.params.id);
+  res.render(`products/product.hbs`, productData.product[id-1]);
 });
 router.get('/:id/edit', (req, res) => {
-  res.render(`products/edit.hbs`);
+  let id = parseInt(req.params.id);
+  res.render(`products/edit.hbs`, productData.product[id-1]);
 });
 
 router.post('/', (req, res) => {
@@ -55,7 +57,5 @@ router.delete('/:id', (req, res) => {
   res.redirect(`/products/${id}`);
 }
 });
-
-
 
 module.exports = router;
