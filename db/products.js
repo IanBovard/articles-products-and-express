@@ -1,42 +1,18 @@
 /* jshint esversion:6 */
 
 module.exports = {
-  getData : getData,
-  postData : postData,
+  convertRequest : convertRequest,
   putIndex : putIndex,
   deleteIndex : deleteIndex,
 };
-let productData = [];
-let id = 1;
 
-function postData (dataObject) {
-  let dataValidate = productData.every((data)=>{
-    return data.name !== dataObject.name;
-  });
-  if (dataValidate){
-    dataObject.id = id;
-    id++;
-    productData.push(dataObject);
-    return true;
-  }else{
-    return false;
-  }
-}
-
-function putIndex (dataObject){
-  let dataIndex = productData.findIndex((data)=>{
-    return dataObject.id === data.id;
-  });
-  if (dataIndex > -1){
-    for (let prop in productData[dataIndex]) {
-      if (productData[dataIndex][prop] !== dataObject[prop] && dataObject[prop] !== ''){
-        productData[dataIndex][prop] = dataObject[prop];
-      }
+function putIndex (product, dataReq){
+  for (let prop in product[0]) {
+    if (product[0][prop] !== dataReq[prop] && dataReq[prop] !== ''){
+      product[0][prop] = dataReq[prop];
     }
-    return true;
-  }else{
-    return dataIndex;
   }
+  return product;
 }
 
 function deleteIndex (dataObject){
@@ -50,6 +26,12 @@ function deleteIndex (dataObject){
   return dataIndex;
 }
 
-function getData(){
-  return productData;
+function convertRequest (request) {
+  const data = {
+    id : parseInt(request.params.id),
+    name : request.body.name,
+    price : parseFloat(request.body.price),
+    inventory : parseInt(request.body.inventory)
+  };
+  return data;
 }
